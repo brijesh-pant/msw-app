@@ -39,7 +39,12 @@ const useFetch = (url) => {
   useEffect(() => {
     dispatch({ type: "fetch" });
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error("Something went wrong.");
+      })
       .then((data) => dispatch({ type: "success", data }))
       .catch((e) => {
         // console.warn(e.message);

@@ -1,8 +1,9 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
 
-export const handlers = [
-  rest.get("https://jsonplaceholder.typicode.com/users", (req, res, ctx) => {
+export const usersHandler = rest.get(
+  "https://jsonplaceholder.typicode.com/users",
+  (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json([
@@ -100,5 +101,13 @@ export const handlers = [
         },
       ])
     );
-  }),
-];
+  }
+);
+
+export const usersHandlerException = rest.get(
+  "https://jsonplaceholder.typicode.com/users",
+  (req, res, ctx) =>
+    res(ctx.status(500), ctx.json({ message: "Deliberately broken request" }))
+);
+
+export const handlers = [usersHandler];
